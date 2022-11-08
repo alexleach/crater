@@ -45,7 +45,11 @@ return [
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'password' => env(
+                env('DB_PASSWORD_FILE', '') !== '' ? 
+                trim(file_get_contents(getenv('DB_PASSWORD_FILE'))) :
+                env('DB_PASSWORD', '')
+            ),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
@@ -61,7 +65,11 @@ return [
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'password' => (
+                env('DB_PASSWORD_FILE', '') !== '' ? 
+                trim(file_get_contents(getenv('DB_PASSWORD_FILE'))) :
+                env('DB_PASSWORD', '')
+            ),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -75,7 +83,11 @@ return [
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'password' => env(
+                env('DB_PASSWORD_FILE', '') !== '' ? 
+                trim(file_get_contents(getenv('DB_PASSWORD_FILE'))) :
+                env('DB_PASSWORD', '')
+            ),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -113,14 +125,22 @@ return [
 
         'default' => [
             'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
+            'password' => env(
+                env('REDIS_PASSWORD_FILE', null) !== null ? 
+                trim(file_get_contents(getenv('REDIS_PASSWORD_FILE'))) :
+                env('REDIS_PASSWORD', '')
+            ),
             'port' => env('REDIS_PORT', 6379),
             'database' => 0,
             'read_write_timeout' => 60,
         ],
         'cache' => [
             'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
+            'password' => env(
+                env('REDIS_PASSWORD_FILE', null) !== null ? 
+                trim(file_get_contents(getenv('REDIS_PASSWORD_FILE'))) :
+                env('REDIS_PASSWORD', '')
+            ),
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
         ],
